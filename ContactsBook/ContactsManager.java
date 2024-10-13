@@ -1,12 +1,13 @@
 //Agenda de Contactos
 
 import java.io.*;
+import java.math.BigInteger;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.TreeMap;
 
 public class ContactsManager {
-    TreeMap<String, Integer> contacts = new TreeMap<>();
+    TreeMap<String, BigInteger> contacts = new TreeMap<>();
     Scanner scan = new Scanner(System.in);
     final String FILE_NAME = "ContactsBook/contacts.txt";
 
@@ -28,7 +29,7 @@ public class ContactsManager {
         while (true) { 
             try {
                 System.out.println("Ingrese el número de teléfono: ");
-                Integer number = scan.nextInt();
+                BigInteger number = scan.nextBigInteger();
                 contacts.put(name, number);
                 System.out.println("Contacto agregado.");
                 saveContacts();
@@ -43,7 +44,7 @@ public class ContactsManager {
     public void searchContact() {
         System.out.println("Ingrese el nombre del contacto a buscar: ");
         String name = scan.nextLine();
-        Integer number = contacts.get(name);
+        BigInteger number = contacts.get(name);
         if (number != null) {
             System.out.printf("El número de %s es: %s.%n", name, number);
         } else {
@@ -101,7 +102,7 @@ public class ContactsManager {
 
     public void modifyName(String name) {
         System.out.println("Ingrese el nuevo nombre:");
-        Integer number = contacts.remove(name);
+        BigInteger number = contacts.remove(name);
         name = scan.nextLine();
         contacts.put(name, number);
         System.out.println("Nombre modificado.");
@@ -110,7 +111,7 @@ public class ContactsManager {
 
     public void modifyNumber(String name) {
         System.out.println("Ingrese el nuevo número:");
-        Integer number = scan.nextInt();
+        BigInteger number = scan.nextBigInteger();
         contacts.put(name, number);
         System.out.println("Número modificado.");
         saveContacts();
@@ -144,7 +145,7 @@ public class ContactsManager {
                 String[] parts = line.split(" - ");
                 if (parts.length == 2) {
                     String name = parts[0];
-                    Integer number = Integer.valueOf(parts[1]);
+                    BigInteger number = new BigInteger(parts[1]);
                     contacts.put(name, number);
                 }
             }
