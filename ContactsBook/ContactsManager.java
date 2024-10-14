@@ -1,13 +1,11 @@
 //Agenda de Contactos
 
 import java.io.*;
-import java.math.BigInteger;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.TreeMap;
 
 public class ContactsManager {
-    TreeMap<String, BigInteger> contacts = new TreeMap<>();
+    TreeMap<String, String> contacts = new TreeMap<>();
     Scanner scan = new Scanner(System.in);
     final String FILE_NAME = "ContactsBook/contacts.txt";
 
@@ -26,25 +24,16 @@ public class ContactsManager {
                 return;
             }
         }
-        while (true) { 
-            try {
-                System.out.println("Ingrese el número de teléfono: ");
-                BigInteger number = scan.nextBigInteger();
+        String number = validateNumber();
                 contacts.put(name, number);
                 System.out.println("Contacto agregado.");
                 saveContacts();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Ingrese un número.");
-                scan.nextLine();
-            }
-        }
     }
 
     public void searchContact() {
         System.out.println("Ingrese el nombre del contacto a buscar: ");
         String name = scan.nextLine();
-        BigInteger number = contacts.get(name);
+        String number = contacts.get(name);
         if (number != null) {
             System.out.printf("El número de %s es: %s.%n", name, number);
         } else {
@@ -55,7 +44,7 @@ public class ContactsManager {
     public void deleteContact() {
         System.out.println("Ingrese el nombre del contacto a eliminar: ");
         String name = scan.nextLine();
-        System.out.printf("¿Está seguro de que desea eliminar a '%s' de la lista de contactos? (Si/No)", name);
+        System.out.printf("¿Está seguro de que desea eliminar a '%s' de la lista de contactos? (Si/No)%n", name);
         String response = scan.nextLine();
         if (!response.equalsIgnoreCase("Si")) {
             System.out.println("Operación cancelada.");
@@ -93,7 +82,7 @@ public class ContactsManager {
                             modifyNumber(name);
                             return;
                         }
-                        default -> System.out.println("Opción no válida. Ingrese un número relacionado a la opción.\n");
+                        default -> System.err.println("Opción no válida. Ingrese un número relacionado a la opción.\n");
                     }
                 }
             }
@@ -102,7 +91,7 @@ public class ContactsManager {
 
     public void modifyName(String name) {
         System.out.println("Ingrese el nuevo nombre:");
-        BigInteger number = contacts.remove(name);
+        String number = contacts.remove(name);
         name = scan.nextLine();
         contacts.put(name, number);
         System.out.println("Nombre modificado.");
@@ -110,8 +99,7 @@ public class ContactsManager {
     }
 
     public void modifyNumber(String name) {
-        System.out.println("Ingrese el nuevo número:");
-        BigInteger number = scan.nextBigInteger();
+        String number = validateNumber();
         contacts.put(name, number);
         System.out.println("Número modificado.");
         saveContacts();
@@ -134,7 +122,7 @@ public class ContactsManager {
                 writer.write(entry.getKey() + " - " + entry.getValue() + "\n");
             } 
         } catch (IOException e) {
-            System.out.println("Error al guardar los contactos.");
+            System.err.println("Error al guardar los contactos.");
         }
     }
 
@@ -145,14 +133,30 @@ public class ContactsManager {
                 String[] parts = line.split(" - ");
                 if (parts.length == 2) {
                     String name = parts[0];
-                    BigInteger number = new BigInteger(parts[1]);
-                    contacts.put(name, number);
+                    String number = parts[1];
+                    if (number.matches("\\d{10}")) {
+                        contacts.put(name, number);
+                    } else {
+                        System.err.printf("Número de teléfono inválido para el contacto '%s'. No se cargará.%n", name);
+                    }
                 }
             }
         } catch (IOException e) {
-            System.out.println("No se pudo cargar el archivo de contactos. Puede que aún no exista.");
-        } catch (NumberFormatException e) {
-            System.out.println("Error al cargar los contactos: formato de número no válido.");
+            System.err.println("No se pudo cargar el archivo de contactos. Puede que aún no exista.");
+        }
+    }
+    
+
+    public String validateNumber() {
+        String number;
+        while (true) {
+            System.out.println("Ingrese el número de teléfono (debe contener diez dígitos): ");
+            number = scan.nextLine();
+            if (number.matches("\\d{10}")) {
+                return number;
+            } else {
+                System.err.println("Formato de número inválido.");
+            }
         }
     }
 
@@ -162,6 +166,8 @@ public class ContactsManager {
     }
 
     public void run() {
+        System.out.println("¡Bienvenido a su Agenda de Contactos!");
+        String option;
         while (true) {
             System.out.println("\nElija una opción:");
             System.out.println("1. Añadir contacto");
@@ -170,26 +176,18 @@ public class ContactsManager {
             System.out.println("4. Eliminar contacto");
             System.out.println("5. Modificar contacto");
             System.out.println("6. Salir");
-
-            try {
-                int opcion = scan.nextInt();
-                scan.nextLine();
-    
-                switch (opcion) {
-                    case 1 -> addContact();
-                    case 2 -> searchContact();
-                    case 3 -> showAllContacts();
-                    case 4 -> deleteContact();
-                    case 5 -> modifyContact();
-                    case 6 -> {
-                        exitApp();
-                        return;
-                    }
-                default -> System.out.println("Opción no válida. Ingrese un número relacionado a la opción.\n");
+            option = scan.nextLine();
+            switch (option) {
+                case "1" -> addContact();
+                case "2" -> searchContact();
+                case "3" -> showAllContacts();
+                case "4" -> deleteContact();
+                case "5" -> modifyContact();
+                case "6" -> {
+                    exitApp();
+                    break;
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Opción no válida. Ingrese un número relacionado a la opción.\n");
-                scan.nextLine();
+            default -> System.err.println("Opción no válida. Debe ingresar el número de alguna opción.");
             }
         }
     }
