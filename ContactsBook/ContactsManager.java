@@ -62,7 +62,7 @@ public class ContactsManager {
         if (contacts.isEmpty()) {
             System.out.println("La agenda está vacía.\n");
         } else {
-            System.out.println("Ingrese el nombre del contacto: ");
+            System.out.println("Ingrese el nombre del contacto:");
             String name = scan.nextLine();
             if (!contacts.containsKey(name)) {
                 System.out.println("Contacto no encontrado.");
@@ -71,14 +71,14 @@ public class ContactsManager {
                 System.out.println("Elija la opción que desea modificar:");
                 System.out.println("1. Nombre");
                 System.out.println("2. Número");
-                String option = scan.nextLine();                
+                char option = scan.next().charAt(0);                
                 while (true) { 
                     switch (option) {
-                        case "1" -> {
+                        case '1' -> {
                             modifyName(name);
                             return;
                         }
-                        case "2" -> {
+                        case '2' -> {
                             modifyNumber(name);
                             return;
                         }
@@ -167,7 +167,7 @@ public class ContactsManager {
 
     public void run() {
         System.out.println("¡Bienvenido a su Agenda de Contactos!");
-        String option;
+        char option;
         while (true) {
             System.out.println("\nElija una opción:");
             System.out.println("1. Añadir contacto");
@@ -176,14 +176,14 @@ public class ContactsManager {
             System.out.println("4. Eliminar contacto");
             System.out.println("5. Modificar contacto");
             System.out.println("6. Salir");
-            option = scan.nextLine();
+            option = scan.next().charAt(0);
             switch (option) {
-                case "1" -> addContact();
-                case "2" -> searchContact();
-                case "3" -> showAllContacts();
-                case "4" -> deleteContact();
-                case "5" -> modifyContact();
-                case "6" -> {
+                case '1' -> addContact();
+                case '2' -> searchContact();
+                case '3' -> showAllContacts();
+                case '4' -> deleteContact();
+                case '5' -> modifyContact();
+                case '6' -> {
                     exitApp();
                     break;
                 }
