@@ -1,0 +1,12 @@
+{
+    "java.project.sourcePaths": [
+        ".",
+        "ContactsBook",
+        "PracticExercises\\src",
+        "UExercises",
+        "CurrencyConverter"
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\Users\\jhoja\\Repositories\\3rd-note\\lib\\juice.jar"
+    ]
+}

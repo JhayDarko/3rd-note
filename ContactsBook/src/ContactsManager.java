@@ -1,3 +1,4 @@
+package src;
 //Agenda de Contactos
 
 import java.io.*;
@@ -177,6 +178,7 @@ public class ContactsManager {
             System.out.println("5. Modificar contacto");
             System.out.println("6. Salir");
             option = scan.next().charAt(0);
+            scan.nextLine();
             switch (option) {
                 case '1' -> addContact();
                 case '2' -> searchContact();
