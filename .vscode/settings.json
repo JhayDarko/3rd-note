@@ -4,9 +4,8 @@
         "ContactsBook",
         "PracticExercises\\src",
         "UExercises",
-        "CurrencyConverter"
+        "CurrencyConverter",
+        "LogicChallenges\\src"
     ],
-    "java.project.referencedLibraries": [
-        "c:\\Users\\jhoja\\Repositories\\3rd-note\\lib\\juice.jar"
-    ]
+    "java.project.referencedLibraries": []
 }
