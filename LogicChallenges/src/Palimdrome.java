@@ -14,18 +14,15 @@ public class Palimdrome {
             if (count % 2 != 0) {
                 oddCount++;
             }
-            if (oddCount > 1) {
-                return false;
-            }
         }
-        return true;
+        return oddCount < 2;
     }
 
     public static void main(String[] args) {
-        System.out.println(palindromeChecker(5));
-        System.out.println(palindromeChecker(2121));
-        System.out.println(palindromeChecker(1331));
-        System.out.println(palindromeChecker(3357665));
-        System.out.println(palindromeChecker(1294));
+        System.out.println("5: " + palindromeChecker(5));
+        System.out.println("2121: " + palindromeChecker(2121));
+        System.out.println("1331: " + palindromeChecker(1331));
+        System.out.println("3357665: " + palindromeChecker(3357665));
+        System.out.println("1294: " + palindromeChecker(1294));
     }
 }
