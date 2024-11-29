@@ -2,10 +2,15 @@
     "java.project.sourcePaths": [
         ".",
         "ContactsBook",
-        "PracticExercises\\src",
-        "UExercises",
         "CurrencyConverter",
-        "LogicChallenges\\src"
+        "Exceptions\\src",
+        "LogicChallenges\\src",
+        "Persistance\\src",
+        "PokemonBattle\\src",
+        "PracticExercises\\src",
+        "UExercises"
     ],
-    "java.project.referencedLibraries": []
+    "java.project.referencedLibraries": [
+        "Persistance\\lib\\gson-2.11.0.jar"
+    ]
 }
